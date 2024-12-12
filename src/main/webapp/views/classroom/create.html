@@ -1,0 +1,44 @@
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Create</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <style>
+    form{
+      margin: 5%;
+    }
+    a{
+      margin-top: 30px;
+    }
+    h2 {
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2 class="text-center">Create Classroom</h2>
+  <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+  <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+  <form th:action="@{/classController/create}" method="post" th:object="${classRoom}" class="mt-4">
+    <div class="mb-3">
+      <label for="className" class="form-label">Class Name</label>
+      <input type="text" class="form-control" id="className" name="className" th:field="*{className}">
+      <p th:if="${#fields.hasErrors('className')}" class="text-danger" th:text="${#fields.errors('className')}"></p>
+    </div>
+    <div class="mb-3">
+      <label for="majors" class="form-label">Majors</label>
+      <input type="text" class="form-control" id="majors" name="majors" th:field="*{majors}">
+      <p th:if="${#fields.hasErrors('majors')}" class="text-danger" th:text="${#fields.errors('majors')}"></p>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+  </form>
+</div>
+
+
+</body>
+</html>
