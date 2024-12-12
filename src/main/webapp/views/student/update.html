@@ -69,7 +69,19 @@
         <input type="text" class="form-control" id="imageUrl" name="imageUrl" th:field="*{imageUrl}">
         <p th:if="${#fields.hasErrors('imageUrl')}" class="text-danger" th:text="${#fields.errors('imageUrl')}"></p>
       </div>
-      <button type="submit" class="btn btn-primary">Create</button>
+      <div class="mb-3">
+        <label for="status" class="form-label">Employee Status</label>
+        <select id="status" name="status" class="form-select" th:field="*{status}">
+          <option value="0">-- Select Status --</option>
+          <option th:value="0" th:text="'Đã thôi học'"></option>
+          <option th:value="1" th:text="'Đang học'"></option>
+          <option th:value="2" th:text="'Tốt nghiệp'"></option>
+          <option th:value="3" th:text="'Bảo lưu'"></option>
+          <option th:value="4" th:text="'Buộc thôi học'"></option>
+        </select>
+        <p th:if="${#fields.hasErrors('status')}" class="text-danger" th:errors="*{status}"></p>
+      </div>
+      <button type="submit" class="btn btn-primary">Update</button>
   </form>
 </div>
 
