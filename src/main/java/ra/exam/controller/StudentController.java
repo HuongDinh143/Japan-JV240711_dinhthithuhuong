@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ra.exam.model.dto.StudentDto;
+import ra.exam.model.dto.StudentUpdateDto;
 import ra.exam.model.entity.ClassRoom;
 import ra.exam.model.entity.Student;
 import ra.exam.repository.IClassRepository;
@@ -65,6 +66,25 @@ public class StudentController {
         return "/student/update";
 
     }
+    @PostMapping("/update")
+    public String update(@Valid @ModelAttribute("student") StudentUpdateDto request,
+                                 BindingResult bindingResult,
+                                 Model model,
+                                 RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("errorMessage", "Dữ liệu không hợp lệ, vui lòng kiểm tra lại.");
+            return "/student/update";
+        }
+        try {
+            studentService.update(request);
+            redirectAttributes.addFlashAttribute("successMessage", "Thêm mới thành công");
+            return "redirect:/employeeController/findAll";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Có lỗi xảy ra trong quá trình xử lý!");
+            return "redirect:/employeeController/initUpdate?studentId="+request.getStudentId();
+        }
+    }
+
     @GetMapping("/delete")
     public String delete(int studentId,RedirectAttributes redirectAttributes) {
         boolean result = studentService.delete(studentId);
